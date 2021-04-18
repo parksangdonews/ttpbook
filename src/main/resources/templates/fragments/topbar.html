@@ -1,0 +1,69 @@
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="topbar">
+    <section id="topbar" class="d-none d-lg-block">
+        <div class="container d-flex">
+            <div class="contact-info mr-auto">
+                <i class="icofont-envelope"></i><a
+                    th:href="@{mailto:parksangdonews@gmail.com}">parksangdonews@gmail.com</a>
+                <i class="icofont-phone"></i> +82 10 9999 4295
+            </div>
+            <div class="social-links">
+                <a th:href="@{#}" class="twitter"><i class="icofont-twitter"></i></a>
+                <a th:href="@{#}" class="facebook"><i class="icofont-facebook"></i></a>
+                <a th:href="@{#}" class="instagram"><i class="icofont-instagram"></i></a>
+                <a th:href="@{#}" class="skype"><i class="icofont-skype"></i></a>
+                <a th:href="@{#}" class="linkedin"><i class="icofont-linkedin"></i></i></a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ======= Header ======= -->
+    <header id="header">
+        <div class="container d-flex">
+
+            <div class="logo mr-auto">
+                <h1 class="text-light"><a th:href="@{/index}"><span>TTP BOOKS</span></a></h1>
+                <!-- Uncomment below if you prefer to use an image logo -->
+                <!-- <a th:href="@{index"><img src="/assets/img/logo.png}" alt="" class="img-fluid"></a>-->
+            </div>
+
+            <nav class="nav-menu d-none d-lg-block">
+                <ul>
+                    <li class="active"><a th:href="@{/index}">Home</a></li>
+
+                    <li class="drop-down"><a th:href="@{#}">About</a>
+                        <ul>
+                            <li><a th:href="@{/link/about}">About Us</a></li>
+                            <li><a th:href="@{/link/team}">Team</a></li>
+
+                            <li class="drop-down"><a th:href="@{#}">Drop Down 2</a>
+                                <ul>
+                                    <li><a th:href="@{#}">Deep Drop Down 1</a></li>
+                                    <li><a th:href="@{#}">Deep Drop Down 2</a></li>
+                                    <li><a th:href="@{#}">Deep Drop Down 3</a></li>
+                                    <li><a th:href="@{#}">Deep Drop Down 4</a></li>
+                                    <li><a th:href="@{#}">Deep Drop Down 5</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li><a th:href="@{/link/services}">Services</a></li>
+                    <li><a th:href="@{/link/book-api}">Book API</a></li>
+                    <li><a th:href="@{/link/portfolio}">Portfolio</a></li>
+                    <li><a th:href="@{/link/pricing}">Pricing</a></li>
+                    <li><a th:href="@{/link/blog}">Blog</a></li>
+                    <li><a th:href="@{/link/contact}">Contact</a></li>
+
+                </ul>
+            </nav><!-- .nav-menu -->
+
+        </div>
+    </header><!-- End Header -->
+
+</th:block>
+
+
+</html>
