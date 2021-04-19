@@ -10,6 +10,6 @@ spring:
     cache: false # only on dev
 
 # get api key : https://developers.naver.com/docs/search/book/
-X-Naver-Client-Id: 90NaqIpDfd9MKHwWpwMI
-X-Naver-Client-Secret: cluz_oS884
+X-Naver-Client-Id: 
+X-Naver-Client-Secret: 
 
