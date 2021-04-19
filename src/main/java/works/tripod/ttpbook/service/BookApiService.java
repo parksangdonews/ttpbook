@@ -2,13 +2,13 @@ package works.tripod.ttpbook.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.net.URIBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import works.tripod.ttpbook.model.BookSearchInput;
 import works.tripod.ttpbook.model.BookSearchOutput;
 
 import java.io.IOException;
@@ -16,53 +16,59 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 
-@Slf4j
 @Service
-public class BookApiService implements BookApi {
+@Slf4j
+public class BookApiService {
 
     public static final String API_URI = "https://openapi.naver.com/v1/search/book.json";
 
-    @Value("${X-Naver-Client-Id}")
-    private String API_ID;
+    //@Value("${api.id:90NaqIpDfd9MKHwWpwMI}")
+    @Value("${api.id}")
+    private String apiId;
 
-    @Value("${X-Naver-Client-Secret}")
-    private String API_KEY;
+    //@Value("${api.pw:cluz_oS884}")
+    @Value("${api.pw}")
+    private String apiKey;
 
-
-    @Override
-    public void callApi(String input) {
+    public BookSearchOutput callApi(BookSearchInput bookSearchInput) {
 
         log.debug("input ::: ");
-        log.debug(input);
+        log.debug(bookSearchInput.toString());
+
+        // set
+        log.debug("API_SET ::::::::::::::::::::0::::::::::::::::::::::::::::::::::::::::::");
+        log.debug(API_URI);
+        log.debug(apiId);
+        log.debug(apiKey);
+        log.debug("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
 
         ObjectMapper mapper = new ObjectMapper();
 
-        try (CloseableHttpClient closeableHttpClient = HttpClients.createDefault()){
+        try (CloseableHttpClient closeableHttpClient = HttpClients.createDefault()) {
 
             // set serach key
             URI uri = new URI(API_URI);
-            URIBuilder uriBuilder = new URIBuilder(uri, StandardCharsets.UTF_8).addParameter("query", input);
+            URIBuilder uriBuilder = new URIBuilder(uri, StandardCharsets.UTF_8)
+                    .addParameter("query", bookSearchInput.getQuery())
+                    .addParameter("display", Integer.toString(bookSearchInput.getDisplay()))
+                    .addParameter("start", Integer.toString(bookSearchInput.getStart()))
+                    .addParameter("sort", bookSearchInput.getSort());
+
             HttpGet httpGet = new HttpGet(uriBuilder.toString());
 
-            // set
-            log.debug("API_SET ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-            log.debug(API_URI);
-            log.debug(API_ID);
-            log.debug(API_KEY);
-            log.debug("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-
             // set header
-            httpGet.setHeader("X-Naver-Client-Id", API_ID);
-            httpGet.setHeader("X-Naver-Client-Secret", API_KEY);
+            httpGet.setHeader("X-Naver-Client-Id", apiId);
+            httpGet.setHeader("X-Naver-Client-Secret", apiKey);
 
             BookSearchOutput output = closeableHttpClient.execute(httpGet, httpResponse -> mapper.readValue(httpResponse.getEntity().getContent(), BookSearchOutput.class));
 
-            log.info(output.toString());
+            return output;
 
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
 
+        return new BookSearchOutput(); // notthing
 
     }
 }

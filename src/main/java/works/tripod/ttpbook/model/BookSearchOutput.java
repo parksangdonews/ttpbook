@@ -20,7 +20,6 @@ public class BookSearchOutput {
     String errorMessage;
     String errorCode;
 
-
 }
 
 

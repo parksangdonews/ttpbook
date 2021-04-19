@@ -1,5 +1,8 @@
 ## rename this file before using, remove a couple of under-bar on file name.
-## __application.yaml -> application.yaml
+## application.yaml__ -> application.yaml
+api:
+  id: 90NaqIpDfd9MKHwWpwMI
+  pw: cluz_oS884
 
 spring:
   thymeleaf:
@@ -9,8 +12,4 @@ spring:
     suffix: .html
     cache: false # only on dev
 
-# get api key : https://developers.naver.com/docs/search/book/
-api:
-  X-Naver-Client-Id:
-  X-Naver-Client-Secret:
 
