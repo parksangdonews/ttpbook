@@ -54,6 +54,7 @@
             <div class="container">
 
                 <div class="row">
+<!--
                     <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
                         <div class="icon-box">
                             <div class="icon"><i class="bx bxl-dribbble"></i></div>
@@ -61,46 +62,16 @@
                             <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
                         </div>
                     </div>
+-->
 
-                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                        <div class="icon-box">
-                            <div class="icon"><i class="bx bx-file"></i></div>
-                            <h4><a href="">Sed ut perspiciatis</a></h4>
-                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
-                        <div class="icon-box">
-                            <div class="icon"><i class="bx bx-tachometer"></i></div>
-                            <h4><a href="">Magni Dolores</a></h4>
-                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
-                        <div class="icon-box">
-                            <div class="icon"><i class="bx bx-world"></i></div>
-                            <h4><a href="">Nemo Enim</a></h4>
-                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
-                        <div class="icon-box">
-                            <div class="icon"><i class="bx bx-slideshow"></i></div>
-                            <h4><a href="">Dele cardo</a></h4>
-                            <p>Quis consequatur saepe eligendi voluptatem consequatur dolor consequuntur</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
-                        <div class="icon-box">
-                            <div class="icon"><i class="bx bx-arch"></i></div>
-                            <h4><a href="">Divera don</a></h4>
-                            <p>Modi nostrum vel laborum. Porro fugit error sit minus sapiente sit aspernatur</p>
-                        </div>
-                    </div>
+                    <!--                   <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+                                           <div class="icon-box">
+                                               <div class="icon"><i class="bx bx-file"></i></div>
+                                               <h4><a href="">Sed ut perspiciatis</a></h4>
+                                               <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+                                           </div>
+                                       </div>
+                    -->
 
                 </div>
 
@@ -108,7 +79,7 @@
         </section><!-- End Services Section -->
 
         <!-- ======= Our Skills Section ======= -->
-        <section id="skills" class="skills">
+        <section id="skills" class="skills" style="display: none">
             <div class="container">
 
                 <div class="section-title">
@@ -182,6 +153,33 @@
 </html>
 
 <script type="text/javascript">
+
+    let showBooks = function (data) {
+
+        console.log("data")
+        console.log(data['items'])
+
+        $("#services .container .row ").empty();
+
+        if (data['errorCode'] == "") {
+            alert("조회오류" + data['errorCode'] + " / " + data['errorMessage'])
+            return;
+        }
+
+        data['items'].forEach(function (e) {
+            $("#services .container .row ").append(
+                '<div class="col-lg-4 col-md-6 d-flex align-items-stretch">' +
+                '<div class="icon-box">' +
+                '<div class="icon"><img src="' + e['image'] + '" style="margin-bottom: 5px"/></div>' +
+                '<div class=""></div>' +
+                '<h6><a href="">' + e['title'] + '</a></h6>' +
+                '<h6><a href="">' + e['author'] + ' / ' + e['publisher'] + '</a></h6>' +
+                '<p>' + e['description'] + '</p>' +
+                '</div>' +
+                '</div>')
+        });
+    }
+
     $(document).ready(function () {
 
         $("#book-search-btn").click(function () {
@@ -193,7 +191,7 @@
 
             console.log(bookSearchInput);
 
-            if(query.length <= 2) return;
+            if (query.length <= 2) return;
 
             $.ajax({
                 type: "POST",
@@ -201,12 +199,14 @@
                 data: bookSearchInput,
                 success: function (data) {
                     console.log(data);
+                    showBooks(data)
                 },
                 dataType: "json"
             });
             //....
         });
-
     });
 
+
 </script>
+
