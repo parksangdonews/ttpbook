@@ -19,7 +19,7 @@ public class Account {
     private Long id;
 
     @Column(unique = true)
-    private String eamil;
+    private String email;
 
     @Column(unique = true)
     private String nickname;
