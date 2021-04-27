@@ -17,7 +17,7 @@ import java.util.concurrent.TimeoutException;
 @Slf4j
 @RestController
 @RequestMapping("/api")
-public class book {
+public class BookController {
 
     @Autowired
     BookApiService bookApi;
@@ -30,14 +30,14 @@ public class book {
         CompletableFuture<BookSearchOutput> searchOutputCompletableFutureNaver = CompletableFuture.supplyAsync(() -> bookApi.callApi(bookSearchInput));
 
         // aladin api
-        // TODO:
         ///CompletableFuture<BookSearchOutput> searchOutputCompletableFutureAladin = CompletableFuture.supplyAsync(() -> bookApi.callApi(bookSearchInput));
 
         // receive
         CompletableFuture<Object> rst = CompletableFuture
                 .anyOf(searchOutputCompletableFutureNaver);
 
-        BookSearchOutput result = (BookSearchOutput) rst.get(2000L, TimeUnit.MILLISECONDS);
+        //BookSearchOutput result = (BookSearchOutput) rst.get(2000L, TimeUnit.MILLISECONDS);
+        BookSearchOutput result = (BookSearchOutput) rst.get();
 
         return new ResponseEntity<>(result, HttpStatus.OK);
 

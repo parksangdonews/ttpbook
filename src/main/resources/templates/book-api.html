@@ -3,12 +3,14 @@
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
       layout:decorate="~{layout/defaultLayout}"
       lang="ko">
+
+
 <head>
     <title layout:title-pattern="$LAYOUT_TITLE : $CONTENT_TITLE">TTP</title>
     <th:block th:fragment="header">
     </th:block>
-
-
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
 <body>
 <th:block layout:fragment="topbar"/>
@@ -54,15 +56,15 @@
             <div class="container">
 
                 <div class="row">
-<!--
-                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-                        <div class="icon-box">
-                            <div class="icon"><i class="bx bxl-dribbble"></i></div>
-                            <h4><a href="">Lorem Ipsum</a></h4>
-                            <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
-                        </div>
-                    </div>
--->
+                    <!--
+                                        <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                                            <div class="icon-box">
+                                                <div class="icon"><i class="bx bxl-dribbble"></i></div>
+                                                <h4><a href="">Lorem Ipsum</a></h4>
+                                                <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+                                            </div>
+                                        </div>
+                    -->
 
                     <!--                   <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
                                            <div class="icon-box">
@@ -148,6 +150,8 @@
 </th:block>
 <th:block th:fragment="footer"></th:block>
 <th:block th:fragment="script"></th:block>
+
+
 </body>
 
 </html>
@@ -182,6 +186,7 @@
 
     $(document).ready(function () {
 
+
         $("#book-search-btn").click(function () {
             let query = $("#barcode-input").val();
             let display = 24; // default : 24
@@ -193,10 +198,17 @@
 
             if (query.length <= 2) return;
 
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            console.log(header);
+            console.log(token);
+
             $.ajax({
                 type: "POST",
                 url: "/api/bookApi",
                 data: bookSearchInput,
+                header: {header: token},
                 success: function (data) {
                     console.log(data);
                     showBooks(data)

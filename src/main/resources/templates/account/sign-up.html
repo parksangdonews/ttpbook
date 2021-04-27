@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}"
+      lang="ko">
+<head>
+    <title layout:title-pattern="$LAYOUT_TITLE : $CONTENT_TITLE">TTP</title>
+    <th:block th:fragment="header">
+    </th:block>
+</head>
+<body>
+<th:block layout:fragment="topbar" />
+<th:block layout:fragment="content">
+
+
+
+
+
+
+
+</th:block>
+<th:block th:fragment="footer"></th:block>
+<th:block th:fragment="script"></th:block>
+</body>
+
+</html>

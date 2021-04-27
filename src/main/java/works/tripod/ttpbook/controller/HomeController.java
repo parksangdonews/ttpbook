@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @Slf4j
-public class home {
+public class HomeController {
 
     @GetMapping(path = {"/", "/index"})
     public String home() {
