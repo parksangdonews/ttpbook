@@ -9,6 +9,11 @@ import works.tripod.ttpbook.model.BookSearchInput;
 import works.tripod.ttpbook.model.BookSearchOutput;
 import works.tripod.ttpbook.service.BookApiService;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 @Slf4j
 @RestController
 @RequestMapping("/api")
@@ -18,10 +23,24 @@ public class book {
     BookApiService bookApi;
 
     @PostMapping("/bookApi")
-    public @ResponseBody ResponseEntity<BookSearchOutput> bookApi(BookSearchInput bookSearchInput) {
+    public @ResponseBody ResponseEntity<BookSearchOutput> bookApi(BookSearchInput bookSearchInput) throws ExecutionException, InterruptedException, TimeoutException {
         log.debug(bookSearchInput.toString());
-        BookSearchOutput bookSearchOutput = bookApi.callApi(bookSearchInput);
-        return new ResponseEntity<>(bookSearchOutput, HttpStatus.OK);
+
+        // naver api
+        CompletableFuture<BookSearchOutput> searchOutputCompletableFutureNaver = CompletableFuture.supplyAsync(() -> bookApi.callApi(bookSearchInput));
+
+        // aladin api
+        // TODO:
+        ///CompletableFuture<BookSearchOutput> searchOutputCompletableFutureAladin = CompletableFuture.supplyAsync(() -> bookApi.callApi(bookSearchInput));
+
+        // receive
+        CompletableFuture<Object> rst = CompletableFuture
+                .anyOf(searchOutputCompletableFutureNaver);
+
+        BookSearchOutput result = (BookSearchOutput) rst.get(2000L, TimeUnit.MILLISECONDS);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
     }
 
 
