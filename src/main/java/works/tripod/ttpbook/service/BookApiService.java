@@ -31,7 +31,6 @@ public class BookApiService {
     private String apiKey;
 
     public BookSearchOutput callApi(BookSearchInput bookSearchInput) {
-
         log.debug("input ::: ");
         log.debug(bookSearchInput.toString());
 

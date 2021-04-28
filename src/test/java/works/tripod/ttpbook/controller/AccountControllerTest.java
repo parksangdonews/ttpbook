@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -31,6 +32,10 @@ class AccountControllerTest {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @MockBean
     JavaMailSender javaMailSender;
@@ -95,31 +100,30 @@ class AccountControllerTest {
 
 
     // TODO : 정상인 경우 작성해야.....
-    /*
+
 
     @DisplayName("인증메일 확인, 입력값 정상")
     @Test
     void checkEmailToken() throws Exception {
 
         // 조회해서 없으면 만들어서 ... 테스트
-
-        Account account = Account.builder()
-                .email("nsu@daum.net")
-                .password("12345678")
-                .nickname("SANGDO")
-                .build();
-
+        Account account = accountRepository.findByEmail("nsu@daum.net");
+        if(account == null) {
+           account = Account.builder()
+                   .email("nsu@daum.net")
+                   .password(passwordEncoder.encode("12345678"))
+                   .nickname("SANGDO")
+                   .build();
+           account.generateEmailCheckToken();
+           accountRepository.save(account);
+        }
 
         mockMvc.perform(get("/check-email-token")
-                .param("token", "blahblah")
+                .param("token", account.getEmailCheckToken())
                 .param("email", "nsu@daum.net"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("error"))
+                .andExpect(model().attributeDoesNotExist("error"))
                 .andExpect(view().name("account/checked-email"));
     }
-
-
-*/
-
 
 }
