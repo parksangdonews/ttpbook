@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import works.tripod.ttpbook.model.Account;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 @Slf4j
 @Controller
@@ -23,8 +24,9 @@ import javax.validation.Valid;
 public class AccountController {
 
     private final SignUpFormValidator signUpFormValidator;
+    private final AccountService accountService;
     private final AccountRepository accountRepository;
-    private final JavaMailSender javaMailSender;
+
 
     @InitBinder("signUpForm") // 해당 객체를 받을 때 바인딩(끼워넣기) 해주는 역할
     public void initBinder(WebDataBinder webDataBinder) {
@@ -40,36 +42,45 @@ public class AccountController {
 
     @PostMapping("/sign-up")
     public String signUpSubmit(@Valid @ModelAttribute SignUpForm signUpForm, Errors errors) {  // @ModelAttibute 생략가능
-
         // signUpFormValidator.validate(signUpForm, errors); // initBinder 로 대체
-
         if (errors.hasErrors()) {
             log.debug(errors.getAllErrors().toString());
             return "account/sign-up";
         }
-
-        Account account = Account.builder()
-                .email(signUpForm.getEmail())
-                .nickname(signUpForm.getNickname())
-                .password(signUpForm.getPassword()) // TODO :: password encoding
-                .emailVerified(false)
-                .studyCreatedByWeb(true)
-                .studyEnrollmentResultByWeb(true)
-                .studyEnrollmentResultByWeb(true)
-                .build();
-
-
-        Account newAccount = accountRepository.save(account);
-
-        newAccount.generateEmailCheckToken();
-
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setTo(newAccount.getEmail());
-        simpleMailMessage.setSubject("회원 가입인증");
-        simpleMailMessage.setText("/check-email-token?token=" + newAccount.getEmailCheckToken() + "&email=" + newAccount.getEmail());
-        javaMailSender.send(simpleMailMessage);
-
-
+        accountService.processNewAccount(signUpForm);
         return "redirect:/";
     }
+
+    @GetMapping("/check-email-token")
+    public String checkEmailToken(String token, String email, Model model) {
+
+        Account account = accountRepository.findByEmail(email);
+
+        String view = "account/checked-email";
+
+        if (account == null) {
+            model.addAttribute("error", "wrong.email");
+            return view;
+        }
+        if(!account.getEmailCheckToken().equals(token)) {
+            model.addAttribute("error", "wrong.email");
+            return view;
+        }
+        if (account.isEmailVerified()) {
+            model.addAttribute("verified", "wrong.emailVerified");
+            return view;
+        }
+
+        // sign-up complete.
+        account.setEmailVerified(true);
+        account.setJoinedAt(LocalDateTime.now());
+        model.addAttribute("numberOfUser", accountRepository.count());
+        model.addAttribute("nickname", account.getNickname());
+
+        accountRepository.save(account);
+
+        return view;
+    }
+
+
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout/defaultLayout"
+      lang="ko">
+<head>
+    <title layout:title-pattern="$LAYOUT_TITLE : $CONTENT_TITLE">TTP</title>
+    <th:block th:fragment="header">
+    </th:block>
+</head>
+<body>
+<th:block layout:fragment="topbar"/>
+<th:block layout:fragment="content">
+
+
+    <div class="container">
+        <div class="py-5 text-center">
+
+            <p class="lead">이메일 확인</p>
+            <!--verified-->
+            <div th:if="${verified}">
+                <div class="alert alert-success" role="alert">
+                    이미 이메일 확인되어 있습니다.
+                </div>
+            </div>
+            <!--on error-->
+            <div th:if="${error}">
+                <div class="alert alert-danger" role="alert">
+                    이메일 확인 링크가 정확하지 않습니다.
+                </div>
+            </div>
+            <!--none error-->
+            <div th:if="${error == null and verified == null }">
+                <h2>E mail 확인되었습니다. <span th:text="${numberOfUser}"></span> 번째 회원,
+                    <span th:text="${nickname}">가입자</span>님 가입을 축하합니다.
+                </h2>
+                <small class="text-info">가입시 사용한 이메일 또는 닉네임과 패스워드로 로그인이 가능합니다.</small>
+            </div>
+        </div>
+    </div>
+
+
+</th:block>
+<th:block th:fragment="footer"></th:block>
+<th:block th:fragment="script"></th:block>
+</body>
+
+</html>
