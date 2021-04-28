@@ -13,12 +13,14 @@
 
 <th:block layout:fragment="content"></th:block>
 
-</body>
+
 
 <!-- 공통 footer -->
 <footer th:replace="fragments/footer :: footer"></footer>
 
 <!-- 공통 javascript -->
-<th:block th:insert="fragments/script :: script"></th:block>
+<th:block th:replace="fragments/script :: script"></th:block>
+
+</body>
 
 </html>

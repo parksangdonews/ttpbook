@@ -26,11 +26,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-hateoas' //
 
 
-    implementation 'org.springframework.boot:spring-boot-starter-security' // chk
+    implementation 'org.springframework.boot:spring-boot-starter-security' // chk∂
     implementation 'org.springframework.security:spring-security-test' // chk , req for testing.
 
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // chk
-    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect' // chk, req
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.5.3' // chk, req
 
     implementation 'org.springframework.boot:spring-boot-starter-web' // chk
     compileOnly 'org.projectlombok:lombok'

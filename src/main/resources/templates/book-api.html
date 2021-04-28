@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      layout:decorate="layout/defaultLayout"
+      layout:decorate="~{layout/defaultLayout}"
       lang="ko">
 
 
@@ -12,7 +12,8 @@
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
-<body>
+
+
 <th:block layout:fragment="topbar"/>
 <th:block layout:fragment="content">
 
@@ -49,7 +50,7 @@
                 </div>
             </div>
         </div>
-g
+
 
         <!-- ======= Services Section ======= -->
         <section id="services" class="services">
@@ -147,14 +148,12 @@ g
     </main><!-- End #main -->
 
 
+
 </th:block>
+
 <th:block th:fragment="footer"></th:block>
+
 <th:block th:fragment="script"></th:block>
-
-
-</body>
-
-</html>
 
 <script type="text/javascript">
 
@@ -218,7 +217,8 @@ g
             //....
         });
     });
-
-
 </script>
+
+
+</html>
 

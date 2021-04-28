@@ -10,6 +10,8 @@ import works.tripod.ttpbook.model.BookSearchInput;
 import works.tripod.ttpbook.model.BookSearchOutput;
 import works.tripod.ttpbook.service.BookApiService;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +29,8 @@ public class BookController {
     public @ResponseBody ResponseEntity<BookSearchOutput> bookApi(BookSearchInput bookSearchInput) throws ExecutionException, InterruptedException, TimeoutException {
         log.debug(bookSearchInput.toString());
 
+        long current = System.currentTimeMillis();
+
         // naver api
         CompletableFuture<BookSearchOutput> searchOutputCompletableFutureNaver = CompletableFuture.supplyAsync(() -> bookApi.callApi(bookSearchInput));
 
@@ -39,6 +43,10 @@ public class BookController {
 
         //BookSearchOutput result = (BookSearchOutput) rst.get(2000L, TimeUnit.MILLISECONDS);
         BookSearchOutput result = (BookSearchOutput) rst.get();
+
+        long resultMilliseconds = System.currentTimeMillis() - current;
+        log.debug("api call time :: ");
+        log.debug(Long.toString(resultMilliseconds));
 
         return new ResponseEntity<>(result, HttpStatus.OK);
 
