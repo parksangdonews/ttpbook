@@ -1,5 +1,6 @@
 package works.tripod.ttpbook.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,11 +17,11 @@ import java.util.concurrent.TimeoutException;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class BookController {
 
-    @Autowired
-    BookApiService bookApi;
+    private final BookApiService bookApi;
 
     @PostMapping("/bookApi")
     public @ResponseBody ResponseEntity<BookSearchOutput> bookApi(BookSearchInput bookSearchInput) throws ExecutionException, InterruptedException, TimeoutException {

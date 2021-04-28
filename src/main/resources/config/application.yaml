@@ -1,10 +1,13 @@
 ## rename this file before using, remove a couple of under-bar on file name.
 ## application.yaml__ -> application.yaml
+
 api:
   id: 90NaqIpDfd9MKHwWpwMI
   pw: cluz_oS884
 
 spring:
+  profiles:
+    active: local
   thymeleaf:
     enable-spring-el-compiler: true
     encoding: UTF-8

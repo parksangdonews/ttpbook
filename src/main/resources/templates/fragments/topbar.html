@@ -38,6 +38,7 @@
                             <li><a th:href="@{/link/about}">About Us</a></li>
                             <li><a th:href="@{/link/team}">Team</a></li>
 
+
                             <li class="drop-down"><a th:href="@{#}">Drop Down 2</a>
                                 <ul>
                                     <li><a th:href="@{#}">Deep Drop Down 1</a></li>
@@ -56,6 +57,22 @@
                     <li><a th:href="@{/link/pricing}">Code</a></li>
                     <li><a th:href="@{/link/blog}">Blog</a></li>
                     <li><a th:href="@{/link/contact}">Contact</a></li>
+                    <li class="drop-down"><a th:href="@{#}">Member</a>
+                        <ul>
+                            <!--<li><a th:href="@{/link/member}">Member</a></li>-->
+                            <li><a th:href="@{/sign-up}">Sign-up</a></li>
+                            <li class="drop-down"><a th:href="@{#}">Drop Down 2</a>
+                                <ul>
+                                    <li><a th:href="@{#}">Deep Drop Down 1</a></li>
+                                    <li><a th:href="@{#}">Deep Drop Down 2</a></li>
+                                    <li><a th:href="@{#}">Deep Drop Down 3</a></li>
+                                    <li><a th:href="@{#}">Deep Drop Down 4</a></li>
+                                    <li><a th:href="@{#}">Deep Drop Down 5</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
 
                 </ul>
             </nav><!-- .nav-menu -->
