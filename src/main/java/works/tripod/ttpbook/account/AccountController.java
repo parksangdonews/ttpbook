@@ -90,8 +90,14 @@ public class AccountController {
 
     @GetMapping("/login")
     public String login() {
+        log.debug("login");
         return "login";
     }
+
+
+
+    /*
+
 
     @PostMapping("/login")
     public String loginProcess(@RequestParam(value = "error", required = false) String error,
@@ -108,6 +114,7 @@ public class AccountController {
 
 
     }
+*/
 
 
 

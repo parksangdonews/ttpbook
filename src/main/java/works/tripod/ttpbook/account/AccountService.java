@@ -67,7 +67,7 @@ public class AccountService {
 
         // temp process
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                account.getNickname(),
+                account.getEmail(),
                 account.getPassword(),
                 roleList);
 
