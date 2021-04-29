@@ -17,12 +17,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         // super.configure(httpSecurity);
         httpSecurity.authorizeRequests()
-                .mvcMatchers("/", "/index", "/login", "/sign-up", "/check-email", "/check-email-token",
-                        "/email-login", "/check-email-login", "login-link", "/profile/*").permitAll()
+                .mvcMatchers("/", "/index", "/login", "/sign-up", "/check-email", "/check-email-token"
+                        , "/logout", "/email-login", "/check-email-login", "login-link", "/profile/*").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/api/**").permitAll() // api
                 .mvcMatchers(HttpMethod.GET, "/profile/**").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/link/**").permitAll() // auto link
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/")
+                .failureUrl("/login?error=true")
+                .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .permitAll();
+
+        /*
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+        */
+
+        // .logoutSuccessHandler("로그아웃 후 처리할 핸들러")
+
     }
 
     @Override

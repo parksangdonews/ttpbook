@@ -47,11 +47,10 @@ public class AccountController {
             log.debug(errors.getAllErrors().toString());
             return "account/sign-up";
         }
-        
+
         // 가입처리
         Account account = accountService.processNewAccount(signUpForm);
         accountService.login(account);
-
 
 
         return "redirect:/";
@@ -69,7 +68,7 @@ public class AccountController {
             return view;
         }
 
-        if(!account.isValidToken(token)) {
+        if (!account.isValidToken(token)) {
             model.addAttribute("error", "wrong.email");
             return view;
         }
@@ -92,5 +91,14 @@ public class AccountController {
         return view;
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "logout";
+    }
 
 }

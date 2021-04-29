@@ -11,9 +11,16 @@
                     <a th:href="@{'/profile/' + ${#authentication.name}}">Hi, <span
                             th:text="${#authentication.name}"></span></a>
                     <a th:href="@{/notifications}"><i class="far fa-bell" aria-hidden="true"></i></a>
+                    <a th:href="@{/link/logout}"><i class="far fa-hand" aria-hidden="true"></i></a>
                     <!--<i class="icofont-envelope"></i><a
                         th:href="@{mailto:parksangdonews@gmail.com}">parksangdonews@gmail.com</a>
                     <i class="icofont-phone"></i> +82 10 9999 4295-->
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <a href="javascript: document.logoutForm.submit()" class="dropdown-toggle">Sign out</a>
+                    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                        <input hidden type="submit" value="Sign Out"/>
+                    </form>
                 </div>
             </div>
             <div class="social-links">
@@ -65,6 +72,7 @@
                     <li><a th:href="@{/link/pricing}">Code</a></li>
                     <li><a th:href="@{/link/blog}">Blog</a></li>
                     <li><a th:href="@{/link/contact}">Contact</a></li>
+                    <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>
                     <li sec:authorize="!isAuthenticated()"><a th:href="@{/sign-up}">Sign-up</a></li>
                     <li class="drop-down" sec:authorize="isAuthenticated()"><a th:href="@{#}">Member</a>
                         <ul>
@@ -72,7 +80,7 @@
                             <li><a th:href="@{'/profile/' + ${#authentication.name}}"><span
                                     th:text="${#authentication.name}"></span>'s Profile</a></li>
                             <li><a th:href="@{/settings/profile}">Setting</a></li>
-                            <li><a th:href="@{/logout}">Logout</a></li>
+                            <li><a th:href="@{/link/logout}">Logout</a></li>
                             <!--<li class="drop-down"><a th:href="@{#}">Study</a>
                                 <ul>
                                     <li><a th:href="@{#}">Open</a></li>
