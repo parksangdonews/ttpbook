@@ -38,7 +38,7 @@
                 <h2>Login</h2>
             </div>
             <div class="row justify-content-center">
-                <form class="needs-validation" action="#" th:action="@{/sign-up}" method="post" novalidate>
+                <form class="needs-validation" action="/login" th:action="@{/login}" method="post" novalidate>
                     <div th:if="${param.error}">
                         <div class="alert alert-danger">
                             Invalid username or password.
@@ -62,10 +62,8 @@
                         <button class="btn btn-primary btn-block" type="submit"
                                 aria-describedby="submitHelp">LOGIN
                         </button>
-                        <small id="submitHelp" class="form-text text-muted">
-                            <a href="#">약관</a>에 동의하시면 가입하기 버튼을 클릭하세요.
-                        </small>
                     </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                 </form>
             </div>
         </div>
