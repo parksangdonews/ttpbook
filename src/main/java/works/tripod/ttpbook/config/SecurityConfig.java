@@ -22,7 +22,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers(HttpMethod.POST, "/api/**").permitAll() // api
                 .mvcMatchers(HttpMethod.GET, "/profile/**").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/link/**").permitAll() // auto link
-                .mvcMatchers("/assets/**").permitAll() // static web resources // web templates using path.
                 .anyRequest().authenticated();
     }
 
@@ -36,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         Resources under "/webjars".
         */
         webSecurity.ignoring()
+                .mvcMatchers("/assets/**") // static web resources // web templates using path.
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 

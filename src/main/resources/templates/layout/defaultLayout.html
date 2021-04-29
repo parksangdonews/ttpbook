@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org" lang="ko" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
 
-<th:block th:replace="fragments/header :: header">
-    <title>TTP </title>
-</th:block>
+    <th:block th:replace="fragments/header :: header">
+        <title>TTP </title>
+    </th:block>
 
+</head>
 <body>
 
-<th:block th:replace="fragments/topbar"></th:block>
+<th:block th:replace="fragments/topbar :: topbar"></th:block>
 
 <th:block layout:fragment="content"></th:block>
-
-
 
 <!-- 공통 footer -->
 <footer th:replace="fragments/footer :: footer"></footer>
 
 <!-- 공통 javascript -->
-<th:block th:replace="fragments/script :: script"></th:block>
+<th:block th:replace="fragments/script :: script "></th:block>
 
 </body>
 

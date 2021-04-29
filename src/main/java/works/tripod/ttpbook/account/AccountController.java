@@ -47,7 +47,13 @@ public class AccountController {
             log.debug(errors.getAllErrors().toString());
             return "account/sign-up";
         }
-        accountService.processNewAccount(signUpForm);
+        
+        // 가입처리
+        Account account = accountService.processNewAccount(signUpForm);
+        accountService.login(account);
+
+
+
         return "redirect:/";
     }
 
@@ -62,7 +68,8 @@ public class AccountController {
             model.addAttribute("error", "wrong.email");
             return view;
         }
-        if(!account.getEmailCheckToken().equals(token)) {
+
+        if(!account.isValidToken(token)) {
             model.addAttribute("error", "wrong.email");
             return view;
         }
@@ -78,6 +85,9 @@ public class AccountController {
         model.addAttribute("nickname", account.getNickname());
 
         accountRepository.save(account);
+
+        // login
+        accountService.login(account);
 
         return view;
     }

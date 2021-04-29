@@ -30,6 +30,8 @@ dependencies {
     implementation 'org.springframework.security:spring-security-test' // chk , req for testing.
 
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // chk
+    implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE' // chk, req for spring 5 security
+
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.5.3' // chk, req
 
     implementation 'org.springframework.boot:spring-boot-starter-web' // chk
@@ -54,3 +56,5 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+

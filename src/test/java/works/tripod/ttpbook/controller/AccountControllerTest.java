@@ -10,7 +10,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import works.tripod.ttpbook.account.AccountRepository;
 import works.tripod.ttpbook.model.Account;
@@ -18,7 +17,10 @@ import works.tripod.ttpbook.model.Account;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.then;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -61,7 +63,8 @@ class AccountControllerTest {
                 .param("email", "email..")
                 .param("password", "abcde"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("account/sign-up"));
+                .andExpect(view().name("account/sign-up"))
+                .andExpect(unauthenticated());
 
     }
 
@@ -71,7 +74,7 @@ class AccountControllerTest {
     void signUpSubmit_with_correct_input() throws Exception {
         mockMvc.perform(post("/sign-up")
                 .with(csrf())  // implementation 'org.springframework.security:spring-security-test' 추가 필요 , https://spring.io/guides/gs/securing-web/
-                .param("nickname", "sangdo")
+                .param("nickname", "SANGDO")
                 .param("email", "nsu@daum.net")
                 .param("password", "12345678"))
                 .andExpect(status().is3xxRedirection())
@@ -95,11 +98,9 @@ class AccountControllerTest {
                 .param("email", "nsu@daum.net"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("error"))
-                .andExpect(view().name("account/checked-email"));
+                .andExpect(view().name("account/checked-email"))
+                .andExpect(unauthenticated());
     }
-
-
-    // TODO : 정상인 경우 작성해야.....
 
 
     @DisplayName("인증메일 확인, 입력값 정상")
@@ -123,7 +124,9 @@ class AccountControllerTest {
                 .param("email", "nsu@daum.net"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeDoesNotExist("error"))
-                .andExpect(view().name("account/checked-email"));
+                .andExpect(view().name("account/checked-email"))
+                .andExpect(authenticated().withUsername("SANGDO"));
+
     }
 
 }
