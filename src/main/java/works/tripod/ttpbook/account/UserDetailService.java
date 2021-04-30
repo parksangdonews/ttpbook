@@ -18,8 +18,6 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class UserDetailService implements UserDetailsService {
 
-
-
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
 
