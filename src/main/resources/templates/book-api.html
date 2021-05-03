@@ -1,17 +1,13 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/defaultLayout}"
       lang="ko">
 
-
 <head>
     <title layout:title-pattern="$LAYOUT_TITLE : $CONTENT_TITLE">TTP</title>
-    <th:block th:fragment="header">
-    </th:block>
-    <meta name="_csrf" content="${_csrf.token}"/>
-    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <th:block th:fragment="header"></th:block>
+
 </head>
 
 
@@ -156,70 +152,9 @@
 
 <th:block th:fragment="script"></th:block>
 
-<script type="text/javascript">
+<th:block th:fragment="ajax-csrf-header"></th:block>
 
-    let showBooks = function (data) {
-
-        console.log("data")
-        console.log(data['items'])
-
-        $("#services .container .row ").empty();
-
-        if (data['errorCode'] == "") {
-            alert("조회오류" + data['errorCode'] + " / " + data['errorMessage'])
-            return;
-        }
-
-        data['items'].forEach(function (e) {
-            $("#services .container .row ").append(
-                '<div class="col-lg-4 col-md-6 d-flex align-items-stretch">' +
-                '<div class="icon-box">' +
-                '<div class="icon"><img src="' + e['image'] + '" style="margin-bottom: 5px"/></div>' +
-                '<div class=""></div>' +
-                '<h6><a href="">' + e['title'] + '</a></h6>' +
-                '<h6><a href="">' + e['author'] + ' / ' + e['publisher'] + '</a></h6>' +
-                '<p>' + e['description'] + '</p>' +
-                '</div>' +
-                '</div>')
-        });
-    }
-
-    $(document).ready(function () {
-
-
-        $("#book-search-btn").click(function () {
-            let query = $("#barcode-input").val();
-            let display = 24; // default : 24
-            let start = 1; // default : 1
-            let sort = "sim" // default : sim
-            let bookSearchInput = {query, display, start, sort};
-
-            console.log(bookSearchInput);
-
-            if (query.length <= 2) return;
-
-            var token = $("meta[name='_csrf']").attr("content");
-            var header = $("meta[name='_csrf_header']").attr("content");
-
-            console.log(header);
-            console.log(token);
-
-            $.ajax({
-                type: "POST",
-                url: "/api/bookApi",
-                data: bookSearchInput,
-                header: {header: token},
-                success: function (data) {
-                    console.log(data);
-                    showBooks(data)
-                },
-                dataType: "json"
-            });
-            //....
-        });
-    });
-</script>
-
+<th:block th:fragment="book-api-script"></th:block>
 
 </html>
 
