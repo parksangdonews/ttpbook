@@ -91,9 +91,20 @@
 
     $(document).ready(function () {
 
+        // key in auto
+        $("#barcode-input").on('keypress',function(e) {
+            if(e.which == 13) {
+                srchBook();
+                $("#barcode-input").val("");
+            }
+        });
 
+        // click srch btn
         $("#book-search-btn").click(function () {
+            srchBook();
+        });
 
+        let srchBook = function () {
 
             let query = $("#barcode-input").val();
             let display = 24; // default : 24
@@ -120,7 +131,9 @@
                 dataType: "json"
             });
             //....
-        });
+        };
+
+
     });
 
 </script>
