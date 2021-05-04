@@ -75,19 +75,57 @@
             return;
         }
 
+
         data['items'].forEach(function (e) {
             $("#services .container .row ").append(
-                '<div class="col-lg-4 col-md-6 d-flex align-items-stretch">' +
+                '<div class="col-lg-6 col-md-12 d-flex align-items-stretch">' +
                 '<div class="icon-box">' +
                 '<div class="icon"><img src="' + e['image'] + '" style="margin-bottom: 5px"/></div>' +
-                '<div class=""></div>' +
+                '<div class="mt-1"></div>' +
                 '<h6><a href="">' + e['title'] + '</a></h6>' +
                 '<h6><a href="">' + e['author'] + ' / ' + e['publisher'] + '</a></h6>' +
                 '<p>' + e['description'] + '</p>' +
                 '</div>' +
                 '</div>')
         });
+
+        /*
+
+        data['items'].forEach(function (e) {
+            $("#services .container .row ").append(
+                '<table className="table table-hover">' +
+                '<tr className="info">' +
+                '   <td><img src="' + e['image'] + '" style="margin-bottom: 5px"/></td>' +
+                '   <td><a href="">' + e['title'] + '</a></td>' +
+                '   <td><a href="">' + e['author'] + ' / ' + e['publisher'] + '</a></td>' +
+                '   <td><a href="">' + e['description'] + '</a></td>' +
+                '</tr>' +
+                '</table>');
+        });
+*/
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     $(document).ready(function () {
 
