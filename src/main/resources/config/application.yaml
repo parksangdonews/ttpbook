@@ -13,10 +13,10 @@ spring:
     suffix: .html
     cache: false # only on dev
   mail:
-    host: "smtp.daum.net"
-    port: 465
-    userName: nsu
-    password: opopop
+    host:
+    port:
+    userName:
+    password:
     #and if authentication not enable in server then remove userName and password and add this
     properties:
       mail:

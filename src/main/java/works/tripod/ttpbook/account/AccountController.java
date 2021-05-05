@@ -47,6 +47,9 @@ public class AccountController {
 
         // 가입처리
         Account account = accountService.processNewAccount(signUpForm);
+
+        log.debug("## mail Sent! : {}", account.getEmail());
+
         accountService.login(account);
 
 
