@@ -1,0 +1,35 @@
+## rename this file before using, remove a couple of under-bar on file name.
+## _application.yaml_
+## to application.yaml or application-{profile}.yaml
+
+api:
+  id: {naver book api key}
+  pw: {naver book api pw}
+
+spring:
+  profiles:
+    active: local
+  thymeleaf:
+    enable-spring-el-compiler: true
+    encoding: UTF-8
+    prefix: classpath:templates/ #defalut
+    suffix: .html
+    cache: false # only on dev
+  datasource: # your db set
+    url: jdbc:h2:mem:ttpbooks;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa: database-platform=org.hibernate.dialect.H2Dialect
+  mail:
+    host: MAIL_SERVER_IP
+    port: MAIL_SERVER_PORT
+    userName: USER_NAME
+    password: THE_PASSWORD
+    #and if authentication not enable in server then remove userName and password and add this
+    properties:
+      mail:
+        smpt:
+          auth: false
+          starttls:
+            enable: false

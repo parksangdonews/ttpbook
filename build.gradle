@@ -39,7 +39,7 @@ dependencies {
     
     developmentOnly 'org.springframework.boot:spring-boot-devtools' // devtools 이용시 h2 console 이용가
     runtimeOnly 'com.h2database:h2'
-    //runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -49,9 +49,31 @@ dependencies {
 
     // query dsl
     implementation 'com.querydsl:querydsl-jpa:4.4.0'
-
-
 }
+
+tasks.register("bootRunLocal") {
+    group = "application"
+    description = "Runs the Spring Boot application with the dev profile"
+    doFirst {
+        tasks.bootRun.configure {
+            systemProperty("spring.profiles.active", "local")
+        }
+    }
+    finalizedBy("bootRun")
+}
+
+tasks.register("bootRunDocker") {
+    group = "application"
+    description = "Runs the Spring Boot application with the docker profile"
+    doFirst {
+        tasks.bootRun.configure {
+            systemProperty("spring.profiles.active", "docker")
+        }
+    }
+    finalizedBy("bootRun")
+}
+
+
 
 test {
     useJUnitPlatform()
