@@ -37,8 +37,11 @@ out/
 .vscode/
 
 ## setup yaml..
-src/main/resources/application*.yaml
-src/main/resources/config/application*.yaml
+/src/main/resources/application*.yaml
+/src/main/resources/config/application*.yaml
 
 # npm modules
-src/main/resources/static/node_modules
+/src/main/resources/static/node_modules
+
+# docker db
+/docker/*/**

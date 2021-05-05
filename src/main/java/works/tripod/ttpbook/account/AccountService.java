@@ -1,6 +1,7 @@
 package works.tripod.ttpbook.account;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,7 @@ import works.tripod.ttpbook.model.Account;
 import java.util.LinkedList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountService {
@@ -57,7 +59,13 @@ public class AccountService {
         simpleMailMessage.setTo(newAccount.getEmail());
         simpleMailMessage.setSubject("회원 가입인증");
         simpleMailMessage.setText("/check-email-token?token=" + newAccount.getEmailCheckToken() + "&email=" + newAccount.getEmail());
+
+        log.debug(newAccount.toString());
+        log.debug(simpleMailMessage.toString());
+
         javaMailSender.send(simpleMailMessage);
+
+
     }
 
     public void login(Account account) {
